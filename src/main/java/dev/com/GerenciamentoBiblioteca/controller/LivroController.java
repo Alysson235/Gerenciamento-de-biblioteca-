@@ -19,7 +19,7 @@ public class LivroController {
     private LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<LivroResponseDTO> cadastrarLivro(@Valid @RequestBody LivroRequestDTO dto){
+    public ResponseEntity<LivroResponseDTO> cadastrarLivro(@RequestBody LivroRequestDTO dto){
         LivroResponseDTO livroCriado = livroService.cadastrarLivro(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(livroCriado);
     }

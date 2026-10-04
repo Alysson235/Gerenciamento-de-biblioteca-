@@ -1,10 +1,7 @@
 package dev.com.GerenciamentoBiblioteca.model;
 
 import dev.com.GerenciamentoBiblioteca.model.enums.TipoEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,8 @@ public class Usuario {
     private Long id;
     private String nome;
     private String email;
+
+    @Enumerated(EnumType.STRING)
     private TipoEnum tipo;
 
 }
