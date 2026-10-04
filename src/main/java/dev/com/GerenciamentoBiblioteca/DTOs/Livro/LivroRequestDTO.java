@@ -6,7 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class LivroRequesDTO {
+public class LivroRequestDTO {
+
+    @NotNull(message = "O ID isbn do livro é obrigatório")
+    String  isbn;
+
+    @NotNull(message = "O titulo do livro é obrigatório")
+    String titulo;
 
     @NotNull(message = "O nome do autor é obrigatório")
     String autor;

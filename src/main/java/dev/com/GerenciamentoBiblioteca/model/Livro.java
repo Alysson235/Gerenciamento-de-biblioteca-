@@ -1,8 +1,8 @@
 package dev.com.GerenciamentoBiblioteca.model;
 
 import dev.com.GerenciamentoBiblioteca.model.enums.CategoriaEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.ISBN;
 
@@ -14,11 +14,15 @@ import org.hibernate.validator.constraints.ISBN;
 public class Livro {
 
     @Id
-    @ISBN(type = ISBN.Type.ISBN_13)
+    @Column(length = 13)
+    @Pattern(regexp = "^\\d{13}$", message = "ISBN deve ter 13 dígitos")
     private String isbn;
 
+    private String titulo;
     private String autor;
     private Integer quantidadeExemplares;
+
+    @Enumerated(EnumType.STRING)
     private CategoriaEnum categoria;
 
 }

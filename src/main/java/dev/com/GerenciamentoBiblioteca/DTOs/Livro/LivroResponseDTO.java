@@ -4,6 +4,7 @@ import dev.com.GerenciamentoBiblioteca.model.enums.CategoriaEnum;
 
 public record LivroResponseDTO(
         String isbn,
+        String titulo,
         String autor,
         Integer quantidade,
         CategoriaEnum categoria

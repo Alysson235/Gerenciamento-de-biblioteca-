@@ -7,5 +7,4 @@ public record UsuarioResponseDTO(
         String nome,
         String email,
         TipoEnum tipo
-) {
-}
+) {}

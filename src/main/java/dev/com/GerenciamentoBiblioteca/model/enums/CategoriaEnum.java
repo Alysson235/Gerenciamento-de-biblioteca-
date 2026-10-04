@@ -10,5 +10,6 @@ public enum CategoriaEnum {
     BIOGRAFIA,
     AUTOAJUDA,
     ENSAIOS,
-    DIDATICOS
+    DIDATICOS,
+    AVENTURA
 }
