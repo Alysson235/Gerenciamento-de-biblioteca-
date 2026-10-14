@@ -12,4 +12,5 @@ public class EmprestimoResponseDTO{
     private String nomeUsuario;
     private LocalDate dataEmprestimo;
     private LocalDate dataPrevistaDevolucao;
+    private boolean ativo = true;
 }

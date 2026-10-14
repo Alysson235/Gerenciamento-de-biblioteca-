@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,7 +44,7 @@ public class EmprestimoService {
 
         if (emprestimosAtivos >= limiteMaximo){
             String tipoFormato = usuario.getTipo().name().toLowerCase();
-            throw new RuntimeException("O"+ tipoFormato + "atingiu o limite máximo de " +limiteMaximo+ "empréstimos ativos. ");
+            throw new RuntimeException("O "+ tipoFormato + " atingiu o limite máximo de " +limiteMaximo+ " empréstimos ativos. ");
         }
 
         livro.setQuantidadeExemplares(livro.getQuantidadeExemplares()-1);
@@ -69,5 +71,40 @@ public class EmprestimoService {
 
         return responseDTO;
 
+    }
+
+    public List<EmprestimoResponseDTO> listarTodos(){
+        List<Emprestimo> emprestimos = emprestimoRepository.findAll();
+
+        return emprestimos.stream().map(emprestimo -> {
+            EmprestimoResponseDTO dto = new EmprestimoResponseDTO();
+            dto.setId(emprestimo.getId());
+            dto.setNomeLivro(emprestimo.getLivro().getTitulo());
+            dto.setNomeUsuario(emprestimo.getUsuario().getNome());
+            dto.setDataEmprestimo(emprestimo.getDataRetirada());
+            dto.setDataPrevistaDevolucao(emprestimo.getDataPrevistaDevolucao());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public List<EmprestimoResponseDTO> listarEmprestimosAtrasados(){
+        LocalDate hoje = LocalDate.now();
+
+        List<Emprestimo> emprestimosAtrasados = emprestimoRepository.findByAtivoTrueAndDataPrevistaDevolucaoBefore(hoje);
+
+        return emprestimosAtrasados.stream().map(emprestimo -> {
+            EmprestimoResponseDTO dto = new EmprestimoResponseDTO();
+            dto.setId(emprestimo.getId());
+            dto.setNomeLivro(emprestimo.getLivro().getTitulo());
+            dto.setNomeUsuario(emprestimo.getUsuario().getNome());
+            dto.setDataEmprestimo(emprestimo.getDataRetirada());
+            dto.setDataPrevistaDevolucao(emprestimo.getDataPrevistaDevolucao());
+            dto.setAtivo(emprestimo.isAtivo());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public List<Emprestimo> listarEmprestimoPorUsuario(Long usuarioId){
+        return emprestimoRepository.findByUsuarioId(usuarioId);
     }
 }
