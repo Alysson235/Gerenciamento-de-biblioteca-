@@ -41,4 +41,10 @@ public class EmprestimoController {
         List<Emprestimo> emprestimos = emprestimoService.listarEmprestimoPorUsuario(usuarioId);
         return ResponseEntity.ok(emprestimos);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Emprestimo> devolverEmprestimo(@PathVariable Long id){
+        Emprestimo emprestimoAtualizado = emprestimoService.registrarDevolucao(id);
+        return ResponseEntity.ok(emprestimoAtualizado);
+    }
 }

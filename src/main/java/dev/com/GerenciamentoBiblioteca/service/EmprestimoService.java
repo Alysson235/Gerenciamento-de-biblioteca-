@@ -107,4 +107,17 @@ public class EmprestimoService {
     public List<Emprestimo> listarEmprestimoPorUsuario(Long usuarioId){
         return emprestimoRepository.findByUsuarioId(usuarioId);
     }
+
+    public Emprestimo registrarDevolucao(Long id){
+        Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(()-> new RuntimeException("Emprestimo"));
+
+        if (!emprestimo.isAtivo()){
+            throw new RuntimeException("Este empréstimo já foi finalizado");
+        }
+
+        emprestimo.setAtivo(false);
+        emprestimo.setDataRealDevolucao(LocalDate.now());
+
+        return emprestimoRepository.save(emprestimo);
+    }
 }

@@ -27,6 +27,7 @@ public class Emprestimo {
 
     private LocalDate dataRetirada;
     private LocalDate dataPrevistaDevolucao;
+    private LocalDate dataRealDevolucao;
 
     private boolean ativo = true;
 }
